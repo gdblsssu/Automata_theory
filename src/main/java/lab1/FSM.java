@@ -72,7 +72,7 @@ public class FSM {
     public void readFile(String filename){
 
         try {
-            File file = new File(filename);
+            File file = new File("/home/uiop/labs/Automati/lab1/src/main/java/lab1/fsmfile/" + filename);
             FileReader fr = new FileReader(file);
             BufferedReader reader = new BufferedReader(fr);
             List<List<Character>>  arr = new ArrayList<>();
