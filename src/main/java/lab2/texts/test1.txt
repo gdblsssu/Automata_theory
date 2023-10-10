@@ -1,0 +1,12 @@
+var
+    a, b, c : int;
+begin
+    a := 3;
+    b := 4;
+    c := 5;
+    "123";
+    if a != b then
+    begin
+        c := c + 1;
+    end;
+end.

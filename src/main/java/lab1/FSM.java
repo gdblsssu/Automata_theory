@@ -29,7 +29,7 @@ public class FSM {
                     break;
                 }
             }
-            if(!flag) return "Последовательность не подходит";
+            if(!flag) return "Последовательность не подходит: " + ch;
         }
         if(countState == endState) return "Число делится";
 
@@ -54,7 +54,7 @@ public class FSM {
             }
         }
 
-        File file = new File("FSM-" + P + "-" + Q + ".fsm");
+        File file = new File("/home/uiop/labs/Automati/lab1/src/main/java/lab1/fsmfile/FSM-" + P + "-" + Q + ".fsm");
         FileWriter fw = new FileWriter(file);
         fw.write(beState + "\n");
         for(List<Character> list: generatedState){
@@ -70,7 +70,6 @@ public class FSM {
     }
 
     public void readFile(String filename){
-
         try {
             File file = new File("/home/uiop/labs/Automati/lab1/src/main/java/lab1/fsmfile/" + filename);
             FileReader fr = new FileReader(file);
