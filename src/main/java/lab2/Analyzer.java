@@ -33,10 +33,15 @@ public class Analyzer {
         for(List<Lexeme> line: lexemeList){
             String str = "";
             for(Lexeme lexeme: line){
-                str += lexeme.getValue() + " <" + lexeme.getType() + "> ";
+                if(!lexeme.getValue().isBlank()){
+                    str += lexeme.getValue() + " <" + lexeme.getType() + "> ";
+                }
+
             }
             str += "\n";
-            fileWriter.write(str);
+            if(!str.equals("\n")){
+                fileWriter.write(str);
+            }
         }
 
         fileWriter.close();
@@ -58,7 +63,8 @@ public class Analyzer {
                             if(dict.reserveWords.contains(val)){
                                 tempList.add(new Lexeme(val, RESERVE));
                             } else {
-                                tempList.add(new Lexeme(val, NALEXEME));
+                                    tempList.add(new Lexeme(val, NALEXEME));
+
                             }
                             tempList.add(new Lexeme(sep, SEPARATOR));
                             flag = true;
@@ -83,15 +89,19 @@ public class Analyzer {
                 if(curLexeme.getType().equals(NALEXEME)){
                     Matcher matcher = pattern.matcher(curLexeme.getValue());
                     if(matcher.matches()){
-                        if(i < line.size() - 1){
-                            if(line.get(i + 1).getType().equals(SEPARATOR)){
+                        /*if(i < line.size() - 1){
+                            if(line.get(i + 1).getType().equals(SEPARATOR) ||
+                                    line.get(i + 1).getType().equals(RESERVE)
+                            ){
                                 curLexeme.setType(IDENTIFIER);
                             }
-                        } else if(i > 0){
-                            if(line.get(i - 1).getType().equals(SEPARATOR)){
+                        } else if(i > 0 && i + 1 < line.size() - 1){
+                            if(line.get(i - 1).getType().equals(SEPARATOR) ||
+                                    line.get(i + 1).getType().equals(RESERVE)){
                                 curLexeme.setType(IDENTIFIER);
                             }
-                        }
+                        }*/
+                        curLexeme.setType(IDENTIFIER);
                     }
                 }
             }
@@ -99,20 +109,35 @@ public class Analyzer {
     }
 
     private void defineConst(List<List<Lexeme>> lexemeList){
+        List<Lexeme> prevLine = null;
         for(List<Lexeme> line: lexemeList){
+
             for(int i = 0; i < line.size(); i++){
                 Lexeme curLexeme = line.get(i);
+                if(curLexeme.getValue().equals("")) continue;
                 if(curLexeme.getType().equals(NALEXEME)){
-                    if((curLexeme.getValue().charAt(0) == '"' &&
+                    /*if((curLexeme.getValue().charAt(0) == '"' &&
                             curLexeme.getValue().charAt(curLexeme.getValue().length() - 1) == '"') ||
                             curLexeme.getValue().chars().allMatch(Character :: isDigit)
                     ){
-                        if(i > 0 && (line.get(i - 1).getType().equals(SEPARATOR)
-                                || line.get(i - 1).getType().equals(RESERVE))){
+                        if((i > 0 && (line.get(i - 1).getType().equals(SEPARATOR) ||
+                                line.get(i - 1).getType().equals(RESERVE)) &&
+                                (i < line.size() - 1 && (line.get(i + 1).getType().equals(SEPARATOR) ||
+                                line.get(i + 1).getType().equals(RESERVE))))
+                        ) {
+                            curLexeme.setType(CONSTANT);
+                        } else if(prevLine != null &&
+                                prevLine.get(prevLine.size() - 1).getType().equals(SEPARATOR) &&
+                                !prevLine.get(prevLine.size() - 1).getValue().equals(";") &&
+                                (i < line.size() - 1 && (line.get(i + 1).getType().equals(SEPARATOR) ||
+                                        line.get(i + 1).getType().equals(RESERVE)))
+                        ){
                             curLexeme.setType(CONSTANT);
                         }
-                    }
+                    }*/
+                    curLexeme.setType(CONSTANT);
                 }
+                prevLine = line;
             }
         }
     }

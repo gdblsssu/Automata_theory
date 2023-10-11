@@ -2,8 +2,13 @@ var
     a, b, c : int;
 begin
     a := 3;
-    b := 4;
-    c := 5;
+    b := 123
+56765 _
+
+65
+    478596;
+    a;
+    c := 5685;
     "123";
     if a != b then
     begin

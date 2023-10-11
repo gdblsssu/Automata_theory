@@ -11,4 +11,5 @@ public class Dict {
     List<String> separators = Arrays.asList(
             ";", ".", "," , "(", ")", ":=", "!=", "+", "-", "/", "*", ":"
     );
+
 }
