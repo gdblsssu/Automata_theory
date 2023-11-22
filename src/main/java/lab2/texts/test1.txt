@@ -1,4 +1,4 @@
-var
+1var1
     a, b, c : int;
 begin
     a := 3;
